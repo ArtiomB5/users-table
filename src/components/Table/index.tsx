@@ -102,6 +102,13 @@ export const Table = () => {
         <Loader />
       ) : (
         <>
+          <Typography.TitleResponsive
+            view={"medium"}
+            key={"Users List"}
+            tag="div"
+          >
+            {"Users"}
+          </Typography.TitleResponsive>
           <style.Table {...getTableProps()}>
             <thead>
               {headerGroups.map((headerGroup) => (
@@ -132,13 +139,6 @@ export const Table = () => {
             </tbody>
           </style.Table>
           <style.CardsWrapper>
-            <Typography.TitleResponsive
-              view={"medium"}
-              key={'Users List'}
-              tag="div"
-            >
-              {'Users List'}
-            </Typography.TitleResponsive>
             <GetUserCard users={data} />
           </style.CardsWrapper>
           <GetPages currentPage={currentPage} pages={pages} />

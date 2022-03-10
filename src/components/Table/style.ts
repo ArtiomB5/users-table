@@ -36,9 +36,4 @@ export const Cell = styled.td`
 
 export const CardsWrapper = styled(column)`
   padding: 5px 0;
-  display: none;
-
-  @media (max-width: 768px) {
-    display: flex;
-  }
 `;

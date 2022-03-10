@@ -101,6 +101,7 @@ export const fetchUsers = () => {
     API.getUsers().then((resp) => {
       dispatch(SetUsers(resp.data));
       dispatch(SetPagesCount(resp.data.length));
+      dispatch(SetLoading(false));
     });
   };
 };

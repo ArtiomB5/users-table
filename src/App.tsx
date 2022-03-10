@@ -11,7 +11,6 @@ function App() {
   useEffect(() => {
     dispatch(SetLoading(true));
     dispatch(fetchUsers());
-    dispatch(SetLoading(false));
   }, [dispatch]);
   return (
     <style.AppWrapper>
