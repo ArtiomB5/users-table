@@ -1,7 +1,13 @@
 import styled from "styled-components";
+import { column } from "../../common";
+
 
 export const Table = styled.table`
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 export const Header = styled.th`
   padding: 5px;
@@ -26,4 +32,8 @@ export const Cell = styled.td`
   min-width: 100px;
   text-align: center;
   padding: 5px;
+`;
+
+export const CardsWrapper = styled(column)`
+  padding: 5px 0;
 `;

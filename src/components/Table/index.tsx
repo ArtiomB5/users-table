@@ -8,6 +8,8 @@ import { GetTableData } from "../../tools/getTableData";
 import { SortByID } from "../../tools/sortByID";
 import { Loader } from "@alfalab/core-components/loader";
 import * as style from "./style";
+import { GetUserCard } from "../../tools/getUserCard";
+import { Typography } from "@alfalab/core-components/typography";
 
 export const Table = () => {
   const loading = useSelector<AppRootStateType, boolean>(
@@ -129,6 +131,16 @@ export const Table = () => {
               })}
             </tbody>
           </style.Table>
+          <style.CardsWrapper>
+            <Typography.TitleResponsive
+              view={"medium"}
+              key={'Users List'}
+              tag="div"
+            >
+              {'Users List'}
+            </Typography.TitleResponsive>
+            <GetUserCard users={data} />
+          </style.CardsWrapper>
           <GetPages currentPage={currentPage} pages={pages} />
         </>
       )}
