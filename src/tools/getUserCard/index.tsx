@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import * as style from "./style";
 import { Typography } from "@alfalab/core-components/typography";
 
@@ -18,31 +19,27 @@ export const GetUserCard = (props: PropsType) => {
     <>
       {props.users.map((user) => {
         return (
-          <style.UserCard>
+          <style.UserCard key={uuidv4()}>
             <Typography.TitleResponsive
               view={"medium"}
-              key={user.email}
               tag="div"
             >
               {user.username}
             </Typography.TitleResponsive>
             <Typography.TitleResponsive
               view={"small"}
-              key={user.email}
               tag="div"
             >
               {user.email}
             </Typography.TitleResponsive>
             <Typography.TitleResponsive
               view={"xsmall"}
-              key={user.email}
               tag="div"
             >
               ID: {user.id}
             </Typography.TitleResponsive>
             <Typography.TitleResponsive
               view={"xsmall"}
-              key={user.email}
               tag="div"
             >
               {user.website}
