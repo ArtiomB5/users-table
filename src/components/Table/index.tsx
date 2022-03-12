@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Column, useTable } from "react-table";
 import { AppRootStateType } from "../../store";
-import { SetPagesCount, UserTypeWithSelect } from "../../store/usersReducer";
+import { setPagesCount, UserTypeWithSelect } from "../../store/usersReducer";
 import { GetPages } from "../../tools/getPages";
 import { GetTableData } from "../../tools/getTableData";
 import { SortByID } from "../../tools/sortByID";
@@ -13,19 +13,19 @@ import { Typography } from "@alfalab/core-components/typography";
 
 export const Table = () => {
   const loading = useSelector<AppRootStateType, boolean>(
-    (state) => state.usersReducer.loading
+    (state) => state.users.loading
   );
   const users = useSelector<AppRootStateType, UserTypeWithSelect[]>(
-    (state) => state.usersReducer.users
+    (state) => state.users.users
   );
   const pages = useSelector<AppRootStateType, number>(
-    (state) => state.usersReducer.pages as number
+    (state) => state.users.pages as number
   );
   const currentPage = useSelector<AppRootStateType, number>(
-    (state) => state.usersReducer.currentPage
+    (state) => state.users.currentPage
   );
   const pageSize = useSelector<AppRootStateType, number>(
-    (state) => state.usersReducer.pageSize
+    (state) => state.users.pageSize
   );
   const usersForPage = users.filter((user, id) => {
     if (
@@ -38,7 +38,7 @@ export const Table = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(SetPagesCount(users.length));
+    dispatch(setPagesCount(users.length));
   }, [users, dispatch]);
 
   const data = React.useMemo(

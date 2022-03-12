@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { SetCurrentPage } from "../store/usersReducer";
+import { setCurrentPage } from "../store/usersReducer";
 import { Pagination } from "@alfalab/core-components/pagination";
 
 type PropsType = {
@@ -9,7 +9,7 @@ type PropsType = {
 
 export const GetPages = (props: PropsType) => {
   const handlePageChange = (pageIndex: number) =>
-    dispatch(SetCurrentPage(pageIndex + 1));
+    dispatch(setCurrentPage(pageIndex + 1));
   const dispatch = useDispatch();
 
   return (

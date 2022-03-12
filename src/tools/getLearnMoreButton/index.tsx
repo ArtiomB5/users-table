@@ -1,5 +1,4 @@
 import { Button } from "@alfalab/core-components/button";
-import { Link } from "react-router-dom";
 import * as style from "./style"
 
 type PropsType = {

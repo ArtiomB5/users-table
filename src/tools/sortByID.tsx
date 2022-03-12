@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { SortByID as SortByIDAC } from "../store/usersReducer";
+import { sortByID as SortByIDAC } from "../store/usersReducer";
 import { Link } from "@alfalab/core-components/link";
 
 export const SortByID = () => {

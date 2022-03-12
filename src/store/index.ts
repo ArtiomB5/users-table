@@ -3,7 +3,7 @@ import { usersReducer } from "./usersReducer";
 import thunkMiddleware from "redux-thunk";
 
 const rootReducer = combineReducers({
-  usersReducer,
+  users: usersReducer,
 });
 
 export const store = configureStore({
@@ -13,3 +13,4 @@ export const store = configureStore({
 });
 
 export type AppRootStateType = ReturnType<typeof rootReducer>;
+

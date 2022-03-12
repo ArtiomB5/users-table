@@ -64,63 +64,63 @@ beforeEach(() => {
 });
 
 test("Should create SET_USERS action", () => {
-  expect(usersReducer.SetUsers(users)).toEqual({
-    type: "SET_USERS",
+  expect(usersReducer.setUsers(users)).toEqual({
+    type: "usersTable/setUsers",
     payload: users,
   });
 });
 
 test("Should create SET_LOADING action", () => {
-  expect(usersReducer.SetLoading(true)).toEqual({
-    type: "SET_LOADING",
+  expect(usersReducer.setLoading(true)).toEqual({
+    type: "usersTable/setLoading",
     payload: true,
   });
 });
 
 test("Should create DELETE_USER action", () => {
-  expect(usersReducer.DeleteUser(1)).toEqual({
-    type: "DELETE_USER",
+  expect(usersReducer.deleteUser(1)).toEqual({
+    type: "usersTable/deleteUser",
     payload: 1,
   });
 });
 
 test("Should create CHECK_USER action", () => {
   const payload = { id: 1, checkboxStatus: true };
-  expect(usersReducer.CheckUser(payload)).toEqual({
-    type: "CHECK_USER",
+  expect(usersReducer.checkUser(payload)).toEqual({
+    type: "usersTable/checkUser",
     payload: payload,
   });
 });
 
 test("Should create SORT_BY_ID action", () => {
-  expect(usersReducer.SortByID()).toEqual({
-    type: "SORT_BY_ID",
+  expect(usersReducer.sortByID()).toEqual({
+    type: "usersTable/sortByID",
   });
 });
 
 test("Should create SET_PAGES_COUNT action", () => {
-  expect(usersReducer.SetPagesCount(2)).toEqual({
-    type: "SET_PAGES_COUNT",
+  expect(usersReducer.setPagesCount(2)).toEqual({
+    type: "usersTable/setPagesCount",
     payload: 2,
   });
 });
 
 test("Should create SET_CURRENT_PAGE action", () => {
-  expect(usersReducer.SetCurrentPage(2)).toEqual({
-    type: "SET_CURRENT_PAGE",
+  expect(usersReducer.setCurrentPage(2)).toEqual({
+    type: "usersTable/setCurrentPage",
     payload: 2,
   });
 });
 
 test("Should create SET_PAGE_SIZE action", () => {
-  expect(usersReducer.SetPageSize(2)).toEqual({
-    type: "SET_PAGE_SIZE",
+  expect(usersReducer.setPageSize(2)).toEqual({
+    type: "usersTable/setPageSize",
     payload: 2,
   });
 });
 
 test("Should set users", () => {
-  const action = usersReducer.SetUsers(users);
+  const action = usersReducer.setUsers(users);
   let usersWithSelect = users.map((user, id) => {
     if (id === 0) {
       return { ...user, checked: true };
@@ -138,7 +138,7 @@ test("Should set users", () => {
 });
 
 test("Should set loading", () => {
-    const action = usersReducer.SetLoading(true);
+    const action = usersReducer.setLoading(true);
     expect(usersReducer.usersReducer(initialState, action)).toEqual({
       loading: true,
       users: [] as UserTypeWithSelect[],
@@ -149,9 +149,9 @@ test("Should set loading", () => {
   });
 
   test("Should delete user with ID=1", () => {
-    const setUsersAction = usersReducer.SetUsers(users);
+    const setUsersAction = usersReducer.setUsers(users);
     const state = usersReducer.usersReducer(initialState, setUsersAction);
-    const deleteUsersAction = usersReducer.DeleteUser(1);
+    const deleteUsersAction = usersReducer.deleteUser(1);
     expect(usersReducer.usersReducer(state, deleteUsersAction)).toEqual({
       loading: false,
       users: [{
@@ -185,9 +185,9 @@ test("Should set loading", () => {
   });
 
   test("Should check user selection with ID=1", () => {
-    const setUsersAction = usersReducer.SetUsers(users);
+    const setUsersAction = usersReducer.setUsers(users);
     const state = usersReducer.usersReducer(initialState, setUsersAction);
-    const selectUserAction = usersReducer.CheckUser({ id: 1, checkboxStatus: true });
+    const selectUserAction = usersReducer.checkUser({ id: 1, checkboxStatus: true });
     let usersWithSelect = users.map((user, id) => {
         if (id === 0) {
           return { ...user, checked: true };
@@ -205,9 +205,9 @@ test("Should set loading", () => {
   });
 
   test("Should sort users by ID", () => {
-    const setUsersAction = usersReducer.SetUsers(users);
+    const setUsersAction = usersReducer.setUsers(users);
     const state = usersReducer.usersReducer(initialState, setUsersAction);
-    const sortUsersAction = usersReducer.SortByID();
+    const sortUsersAction = usersReducer.sortByID();
     const usersWithSelect = users.map((user, id) => {
         if (id === 0) {
           return { ...user, checked: true };
@@ -235,7 +235,7 @@ test("Should set loading", () => {
   });
 
   test("Should set pages count", () => {
-    const action = usersReducer.SetPagesCount(5);
+    const action = usersReducer.setPagesCount(5);
     expect(usersReducer.usersReducer(initialState, action)).toEqual({
         loading: false,
         users: [] as UserTypeWithSelect[],
@@ -246,7 +246,7 @@ test("Should set loading", () => {
   });
 
   test("Should set current page number equal 1", () => {
-    const action = usersReducer.SetCurrentPage(2);
+    const action = usersReducer.setCurrentPage(2);
     expect(usersReducer.usersReducer(initialState, action)).toEqual({
         loading: false,
         users: [] as UserTypeWithSelect[],
@@ -257,7 +257,7 @@ test("Should set loading", () => {
   });
 
   test("Should set page size", () => {
-    const action = usersReducer.SetPageSize(15);
+    const action = usersReducer.setPageSize(15);
     expect(usersReducer.usersReducer(initialState, action)).toEqual({
         loading: false,
         users: [] as UserTypeWithSelect[],

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import {
-  CheckUser,
+  checkUser,
   UserTypeWithSelect,
 } from "../store/usersReducer";
 import { Checkbox } from "@alfalab/core-components/checkbox";
@@ -26,7 +26,7 @@ export const GetCheckBox = (props: PropsType) => {
         selectedUsers: props.selectedUsers,
       })
     ) {
-      dispatch(CheckUser({ id: props.id, checkboxStatus: !props.checked }));
+      dispatch(checkUser({ id: props.id, checkboxStatus: !props.checked }));
     } else {
       setFixedToastOpen(true);
     }

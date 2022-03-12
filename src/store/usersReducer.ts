@@ -1,7 +1,16 @@
+import { createSlice } from "@reduxjs/toolkit";
 import { Dispatch } from "redux";
 import { API, UserType } from "../API";
 import { RemoveUserByID } from "../tools/removeUserByID";
 import { SelectOneUser } from "../tools/selectOneUser";
+
+interface UsersTableState {
+  loading: boolean;
+  users: UserTypeWithSelect[];
+  pages: number | null;
+  currentPage: number;
+  pageSize: number;
+}
 
 const initialState = {
   loading: false,
@@ -9,19 +18,20 @@ const initialState = {
   pages: null,
   currentPage: 1,
   pageSize: 5,
-};
+} as UsersTableState;
 
-export const usersReducer = (
-  state: StateType = initialState,
-  action: ActionType
-) => {
-  switch (action.type) {
-    case "SET_USERS":
+const usersTableSlice = createSlice({
+  name: "usersTable",
+  initialState,
+  reducers: {
+    setUsers(state, action: { payload: UserType[] }) {
       const usersWithSelect = SelectOneUser({ users: action.payload });
-      return { ...state, users: usersWithSelect };
-    case "SET_LOADING":
-      return { ...state, loading: action.payload };
-    case "DELETE_USER":
+      state.users = usersWithSelect;
+    },
+    setLoading(state, action: { payload: boolean }) {
+      state.loading = action.payload;
+    },
+    deleteUser(state, action: { payload: number }) {
       let usersArrWithRemoverUser = [] as UserTypeWithSelect[];
       if (
         state.users.filter((u) => u.checked === true).length === 1 &&
@@ -36,8 +46,12 @@ export const usersReducer = (
           userID: action.payload,
         });
       }
-      return { ...state, users: usersArrWithRemoverUser };
-    case "CHECK_USER":
+      state.users = usersArrWithRemoverUser;
+    },
+    checkUser(
+      state,
+      action: { payload: { id: number; checkboxStatus: boolean } }
+    ) {
       let checkedUsers = state.users.map((user: UserTypeWithSelect) => {
         if (user.id === action.payload.id) {
           return { ...user, checked: action.payload.checkboxStatus };
@@ -45,8 +59,9 @@ export const usersReducer = (
           return user;
         }
       });
-      return { ...state, users: checkedUsers };
-    case "SORT_BY_ID":
+      state.users = checkedUsers;
+    },
+    sortByID(state) {
       const usersDeepCopy = state.users.map((user) => {
         return {
           ...user,
@@ -57,51 +72,40 @@ export const usersReducer = (
       const sortedUsers = usersDeepCopy.sort((a, b) => {
         return a.id - b.id ? -1 : 1;
       });
-      return { ...state, users: sortedUsers };
-    case "SET_PAGES_COUNT":
-      return { ...state, pages: Math.ceil(action.payload / state.pageSize) };
-    case "SET_CURRENT_PAGE":
-      return { ...state, currentPage: action.payload };
-    case "SET_PAGE_SIZE":
-      return { ...state, pageSize: action.payload };
-    default:
-      return state;
-  }
-};
+      state.users = sortedUsers;
+    },
+    setPagesCount(state, action: { payload: number }) {
+      state.pages = Math.ceil(action.payload / state.pageSize);
+    },
+    setCurrentPage(state, action: { payload: number }) {
+      state.currentPage = action.payload;
+    },
+    setPageSize(state, action: { payload: number }) {
+      state.pageSize = action.payload;
+    },
+  },
+});
 
-//actions
-export const SetUsers = (payload: UserType[]) => {
-  return { type: "SET_USERS", payload } as const;
-};
-export const SetLoading = (payload: boolean) => {
-  return { type: "SET_LOADING", payload } as const;
-};
-export const DeleteUser = (payload: number) => {
-  return { type: "DELETE_USER", payload } as const;
-};
-export const CheckUser = (payload: { id: number; checkboxStatus: boolean }) => {
-  return { type: "CHECK_USER", payload } as const;
-};
-export const SortByID = () => {
-  return { type: "SORT_BY_ID" } as const;
-};
-export const SetPagesCount = (payload: number) => {
-  return { type: "SET_PAGES_COUNT", payload } as const;
-};
-export const SetCurrentPage = (payload: number) => {
-  return { type: "SET_CURRENT_PAGE", payload: payload } as const;
-};
-export const SetPageSize = (payload: number) => {
-  return { type: "SET_PAGE_SIZE", payload: payload } as const;
-};
+export const {
+  setUsers,
+  setLoading,
+  deleteUser,
+  checkUser,
+  sortByID,
+  setPagesCount,
+  setCurrentPage,
+  setPageSize,
+} = usersTableSlice.actions;
+
+export const usersReducer = usersTableSlice.reducer;
 
 //thunks
 export const fetchUsers = () => {
   return (dispatch: Dispatch<ThunkDispatch>) => {
     API.getUsers().then((resp) => {
-      dispatch(SetUsers(resp.data));
-      dispatch(SetPagesCount(resp.data.length));
-      dispatch(SetLoading(false));
+      dispatch(setUsers(resp.data));
+      dispatch(setPagesCount(resp.data.length));
+      dispatch(setLoading(false));
     });
   };
 };
@@ -120,12 +124,13 @@ export type StateType = {
 };
 
 type ActionType =
-  | ReturnType<typeof SetUsers>
-  | ReturnType<typeof SetLoading>
-  | ReturnType<typeof DeleteUser>
-  | ReturnType<typeof CheckUser>
-  | ReturnType<typeof SortByID>
-  | ReturnType<typeof SetPagesCount>
-  | ReturnType<typeof SetCurrentPage>
-  | ReturnType<typeof SetPageSize>;
+  | ReturnType<typeof setUsers>
+  | ReturnType<typeof setLoading>
+  | ReturnType<typeof deleteUser>
+  | ReturnType<typeof checkUser>
+  | ReturnType<typeof sortByID>
+  | ReturnType<typeof setPagesCount>
+  | ReturnType<typeof setCurrentPage>
+  | ReturnType<typeof setPageSize>;
+
 type ThunkDispatch = ActionType;

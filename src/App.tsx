@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import * as style from "./style";
-import { fetchUsers, SetLoading } from "./store/usersReducer";
+import { fetchUsers, setLoading } from "./store/usersReducer";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { Table } from "./components/Table";
@@ -9,7 +9,7 @@ import { UserPage } from "./components/UserPage";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(SetLoading(true));
+    dispatch(setLoading(true));
     dispatch(fetchUsers());
   }, [dispatch]);
   return (
